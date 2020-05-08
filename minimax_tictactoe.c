@@ -1,138 +1,124 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 const int JUGADOR = -1;
 const int COMPUTADORA = 1;
-const int NULO = 0;
-const int TAMANO_TABLERO = 9;
+const int CASILLERO_VACIO = 0;
+const int EMPATE = 0;
+const int TAMANIO_TABLERO = 9;
 const char CRUZ = 'X';
 const char CERO = 'O';
 const char CARACTER_VACIO = ' ';
 const long int INFINITO = 999;
 
 char imprimir_jugada(int i) {
-    if (i == JUGADOR)  
+    if (i == COMPUTADORA)  
         return CRUZ;
-    if (i == COMPUTADORA)
+    if (i == JUGADOR)
         return CERO;
     else
         return CARACTER_VACIO;
-    
 }
 
-void imprimir_tablero(int t[9], int i) {
-    if (i == 0){
-        printf(" %i | %i | %i\n",1,2,3);
+void imprimir_tablero(int tablero[9]) {
+        printf(" %c | %c | %c\n",imprimir_jugada(tablero[0]),imprimir_jugada(tablero[1]),imprimir_jugada(tablero[2]));
         printf("---+---+---\n");
-        printf(" %i | %i | %i\n",4,5,6);
+        printf(" %c | %c | %c\n",imprimir_jugada(tablero[3]),imprimir_jugada(tablero[4]),imprimir_jugada(tablero[5]));
         printf("---+---+---\n");
-        printf(" %i | %i | %i\n",7,8,9);
-
-    }
-    else{
-        printf(" %c | %c | %c\n",imprimir_jugada(t[0]),imprimir_jugada(t[1]),imprimir_jugada(t[2]));
-        printf("---+---+---\n");
-        printf(" %c | %c | %c\n",imprimir_jugada(t[3]),imprimir_jugada(t[4]),imprimir_jugada(t[5]));
-        printf("---+---+---\n");
-        printf(" %c | %c | %c\n",imprimir_jugada(t[6]),imprimir_jugada(t[7]),imprimir_jugada(t[8]));
-    }
+        printf(" %c | %c | %c\n",imprimir_jugada(tablero[6]),imprimir_jugada(tablero[7]),imprimir_jugada(tablero[8]));
 }
 
-int verificar_ganador(int tablero[TAMANO_TABLERO]) {
-    unsigned combinaciones_ganadoras[8][3] = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
+int verificar_ganador(int tablero[TAMANIO_TABLERO]) {
+    int combinaciones_ganadoras[8][3] = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
     int i;
     for(i = 0; i < 8; ++i) {
-        if(tablero[combinaciones_ganadoras[i][0]] != 0 &&
-           tablero[combinaciones_ganadoras[i][0]] == tablero[combinaciones_ganadoras[i][1]] &&
-           tablero[combinaciones_ganadoras[i][0]] == tablero[combinaciones_ganadoras[i][2]])
+        if (tablero[combinaciones_ganadoras[i][0]] != 0 && tablero[combinaciones_ganadoras[i][0]] == tablero[combinaciones_ganadoras[i][1]] && tablero[combinaciones_ganadoras[i][0]] == tablero[combinaciones_ganadoras[i][2]]){
             return tablero[combinaciones_ganadoras[i][2]];
+        }
     }
-    return NULO;
+    return EMPATE;
 }
 
-int minimax(int tablero[TAMANO_TABLERO], int jugador) {
-    if(verificar_ganador(tablero) != 0) 
-        return verificar_ganador(tablero) * jugador;
+int minimax(int tablero[TAMANIO_TABLERO], int jugador) {
+    bool encontro_movimiento = false;
+    int score = -INFINITO;
     int i;
-    int movimiento = -1;
-    int puntaje = -2;
-    for(i = 0; i < 9; ++i) {
-        if(tablero[i] == NULO) {
+
+    int winner = verificar_ganador(tablero);
+    if(winner != EMPATE) 
+        return winner * jugador;
+
+    for (i = 0; i < 9; i++) {
+        if(tablero[i] == CASILLERO_VACIO) {
             tablero[i] = jugador;
-
-            int minimax_puntaje = -minimax(tablero, jugador*-1);
-            if(minimax_puntaje > puntaje) {
-                puntaje = minimax_puntaje;
-                movimiento = i;
+            int minimax_score = -minimax(tablero, -jugador);
+            if(minimax_score > score) {
+                score = minimax_score;
+                encontro_movimiento = true;
             }
-            tablero[i] = 0;
+            tablero[i] = CASILLERO_VACIO;
         }
     }
-    if (movimiento == -1) 
+    if (encontro_movimiento == false){
         return 0;
-    
-    return puntaje;
+    }
+    else{
+        return score;
+    }
 }
 
-void movimiento_computadora(int tablero[TAMANO_TABLERO]) {
+void movimiento_computadora(int tablero[TAMANIO_TABLERO]) {
     int movimiento;
-    int mejor_puntaje = -INFINITO;
+    int mejor_score = -INFINITO;
     int i;
-    for(i = 0; i < TAMANO_TABLERO; ++i) {
-        if (tablero[i] == 0){
-            tablero[i] = 1;
-            int puntaje = -minimax(tablero, -1);
-            tablero[i] = 0;
-            if (puntaje > mejor_puntaje){
-                mejor_puntaje = puntaje;
+    for(i = 0; i < TAMANIO_TABLERO; ++i) {
+        if (tablero[i] == CASILLERO_VACIO){
+            tablero[i] = COMPUTADORA;
+            int score = -minimax(tablero, JUGADOR);
+            if (score > mejor_score){
+                mejor_score = score;
                 movimiento = i;
             }
+            tablero[i] = CASILLERO_VACIO;
         }
     }
-    
-    tablero[movimiento] = 1;
+    tablero[movimiento] = COMPUTADORA;
 }
 
-void movimiento_jugador(int tablero[TAMANO_TABLERO]) {
+void movimiento_jugador(int tablero[TAMANIO_TABLERO]) {
     int movimiento = 0;
     do {
         printf("\nIngrese su jugada (1-9): ");
-        scanf("%d", &movimiento);
-        printf("\n");
-    } while (((movimiento - 1) >= TAMANO_TABLERO || (movimiento - 1) < 0) || (tablero[(movimiento -1)] != NULO));
+        scanf("%i", &movimiento);
+    } while (((movimiento - 1) >= TAMANIO_TABLERO || (movimiento - 1) < 0) || (tablero[(movimiento -1)] != CASILLERO_VACIO));
     
     tablero[(movimiento - 1)] = JUGADOR;
 }
 
 int main() {
     int tablero[9] = {0,0,0,0,0,0,0,0,0};
-    int jugador = 0;
-    do {
-        printf("Eres X, la computadora es O\nJuegas primero o segundo?: ");
-        scanf("%d",&jugador);
-        printf("\n");
-    } while (jugador != 1 && jugador !=2);
+
+    printf("\nLa computadora es X, tu eres O.\n\n");
+    imprimir_tablero(tablero);
+    printf("\nLA COMPUTADORA EMPIEZA.\n\n");
     
-    unsigned turno;
-    for(turno = 0; turno < 9 && verificar_ganador(tablero) == 0; ++turno) {
-        if((turno + jugador) % 2 == 0)
+    int turno;
+    for(turno = 0; turno < 9 && verificar_ganador(tablero) == EMPATE; turno++) {
+        if (turno% 2 == 0){
             movimiento_computadora(tablero);
+        }
         else {
-            imprimir_tablero(tablero, turno);
+            imprimir_tablero(tablero);
             movimiento_jugador(tablero);
+            printf("\n");
         }
     }
-
-    if (verificar_ganador(tablero) == JUGADOR){
-        imprimir_tablero(tablero, turno);
-        printf("Has ganado\n");
-    }
     if (verificar_ganador(tablero) == COMPUTADORA){
-        imprimir_tablero(tablero, turno);
-        printf("Has perdido\n");
+        imprimir_tablero(tablero);
+        printf("\nHas perdido!\n\n");
     }
-
-    if (verificar_ganador(tablero) == NULO){
-        imprimir_tablero(tablero, turno);
-        printf("Empate\n");
+    if (verificar_ganador(tablero) == CASILLERO_VACIO){
+        imprimir_tablero(tablero);
+        printf("\nHan empatado\n\n");
     }
 }
