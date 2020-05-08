@@ -1,4 +1,4 @@
-#ABOUT
+# ABOUT
 
 El codigo que se encuentra en minimax_tictactoe.c es una sencilla implementacion del juego tictactoe. Se juega desde la consola, empieza siempre la computadora y el
 jugador elige con los numeros de 1-9 la posicion del tablero que desea jugar.
