@@ -4,8 +4,8 @@ El codigo que se encuentra en **minimax_tictactoe.c** es una sencilla implementa
 jugador elige con los numeros de 1-9 la posicion del tablero que desea jugar.
 
 Por supuesto es facilmente mejorable, como por ejemplo, permitiendo al jugador *humano* ir primero, creando una interfaz grafica, o hasta optimizando el *minimax algorithm* para
-que la computadora elija siempre la jugada que la lleve mas rapidamente a la victoria. Por supuesto esta ultima opción es completamente innecesaria debido al nivel sencillez que se presentan
-en las alternativas de jugadas de tictactoe, sin embargo esto es **altamente** recomendable para aplicar en situaciones similares en otros juegos, como lo seria en el ajedrez. Seria
+que la computadora elija siempre la jugada que la lleve mas rapidamente a la victoria. Por supuesto esta ultima opción es completamente innecesaria debido al nivel sencillez que se presenta
+en las alternativas de jugadas de tictactoe, sin embargo esto es **altamente** recomendable para aplicar en situaciones similares en otros juegos mas complejos, tal como el ajedrez. Seria
 interesante llegar a esa implementacion.
 
 A continuacion dejo contenido online que me ha sido de muchisima utilidad (en ingles):
