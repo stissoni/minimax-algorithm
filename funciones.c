@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "constantes_globales.h"
+#include "constantes.h"
 
 char imprimir_jugada(int i) {
     if (i == COMPUTADORA)  

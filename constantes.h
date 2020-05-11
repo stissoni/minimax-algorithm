@@ -1,5 +1,7 @@
-#ifndef _CONSTANTE_GLOBAL_H_
-    #define _FUNCIONES_CONSTANTES_GLOBALES_H_
+#ifndef _CONSTANTES_H_
+
+    #define _CONSTANTES_H_
+    
     extern const int JUGADOR;
     extern const int COMPUTADORA;
     extern const int CASILLERO_VACIO;
@@ -9,4 +11,5 @@
     extern const char CERO;
     extern const char CARACTER_VACIO;
     extern const int INFINITO;
+
 #endif
