@@ -10,16 +10,15 @@ const char CERO = 'O';
 const char CARACTER_VACIO = ' ';
 const int INFINITO = 999;
 
-void imprimir_tablero(int tablero[TAMANIO_TABLERO]);
+void imprimir_tablero(int tablero[TAMANIO_TABLERO], int jugador_inicial);
 void jugar_partida(int tablero[TAMANIO_TABLERO]);
 
 int main() {
     int tablero[9] = {0,0,0,0,0,0,0,0,0};
 
     printf("\nLa computadora es X, tu eres O.\n\n");
-    imprimir_tablero(tablero);
-    printf("\nLA COMPUTADORA EMPIEZA.\n\n");
-    
+    imprimir_tablero(tablero, 1);
+
     jugar_partida(tablero);
     return 0;
 }

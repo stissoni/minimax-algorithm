@@ -2,21 +2,31 @@
 #include <stdbool.h>
 #include "constantes.h"
 
-char imprimir_jugada(int i) {
-    if (i == COMPUTADORA)  
-        return CRUZ;
-    if (i == JUGADOR)
-        return CERO;
-    else
-        return CARACTER_VACIO;
+char imprimir_jugada(int i, int jugador_inicial) {
+    if (jugador_inicial == COMPUTADORA){
+        if (i == COMPUTADORA)  
+            return CRUZ;
+        if (i == JUGADOR)
+            return CERO;
+        else
+            return CARACTER_VACIO;
+    }
+    if (jugador_inicial == JUGADOR){
+        if (i == JUGADOR)
+            return CRUZ;
+        if (i == COMPUTADORA)  
+            return CERO;
+        else
+            return CARACTER_VACIO;
+    }
 }
 
-void imprimir_tablero(int tablero[9]) {
-        printf(" %c | %c | %c\n",imprimir_jugada(tablero[0]),imprimir_jugada(tablero[1]),imprimir_jugada(tablero[2]));
+void imprimir_tablero(int tablero[9], int jugador_inicial) {
+        printf(" %c | %c | %c\n",imprimir_jugada(tablero[0], jugador_inicial),imprimir_jugada(tablero[1], jugador_inicial),imprimir_jugada(tablero[2], jugador_inicial));
         printf("---+---+---\n");
-        printf(" %c | %c | %c\n",imprimir_jugada(tablero[3]),imprimir_jugada(tablero[4]),imprimir_jugada(tablero[5]));
+        printf(" %c | %c | %c\n",imprimir_jugada(tablero[3], jugador_inicial),imprimir_jugada(tablero[4], jugador_inicial),imprimir_jugada(tablero[5], jugador_inicial));
         printf("---+---+---\n");
-        printf(" %c | %c | %c\n",imprimir_jugada(tablero[6]),imprimir_jugada(tablero[7]),imprimir_jugada(tablero[8]));
+        printf(" %c | %c | %c\n",imprimir_jugada(tablero[6], jugador_inicial),imprimir_jugada(tablero[7], jugador_inicial),imprimir_jugada(tablero[8], jugador_inicial));
 }
 
 int verificar_ganador(int tablero[TAMANIO_TABLERO]) {
@@ -87,23 +97,43 @@ void movimiento_jugador(int tablero[TAMANIO_TABLERO]) {
 }
 
 void jugar_partida(int tablero[TAMANIO_TABLERO]){
-    int turno;
-    for(turno = 0; turno < 9 && verificar_ganador(tablero) == EMPATE; turno++) {
-        if (turno% 2 == 0){
+    int turno_global;
+    int turno_jugador;
+    int jugador_inicial;
+    printf("\nQuieres ir pimero o segundo? : ");
+    scanf("%i", &turno_jugador);
+    while (turno_jugador != 1 && turno_jugador != 2){
+        printf("\nQuieres ir pimero o segundo? : ");
+        scanf("%i", &turno_jugador);
+    }
+
+    if (turno_jugador == 2){
+        printf("\nLA COMPUTADORA EMPIEZA.\n\n");
+        jugador_inicial = COMPUTADORA;
+    }
+    else {
+        printf("\nEMPIEZAS!\n\n");
+        jugador_inicial = JUGADOR;
+    }
+    
+    for(turno_global = 0; turno_global < 9 && verificar_ganador(tablero) == EMPATE; turno_global++) {
+        if (turno_jugador % 2 == 0){
             movimiento_computadora(tablero);
+            turno_jugador++;
         }
         else {
-            imprimir_tablero(tablero);
+            imprimir_tablero(tablero, jugador_inicial);
             movimiento_jugador(tablero);
+            turno_jugador++;
             printf("\n");
         }
     }
     if (verificar_ganador(tablero) == COMPUTADORA){
-        imprimir_tablero(tablero);
+        imprimir_tablero(tablero, jugador_inicial);
         printf("\nHas perdido!\n\n");
     }
     if (verificar_ganador(tablero) == CASILLERO_VACIO){
-        imprimir_tablero(tablero);
+        imprimir_tablero(tablero, jugador_inicial);
         printf("\nHan empatado\n\n");
     }
 }
