@@ -10,9 +10,9 @@ interesante llegar a esa implementacion.
 
 A continuacion dejo contenido online que me ha sido de muchisima utilidad (en ingles):
 
-https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/
+* [Geekforgeeks.org](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/)
 
-https://www.youtube.com/watch?v=l-hh51ncgDI
+* [Sebastian Lague video](https://www.youtube.com/watch?v=l-hh51ncgDI)
 
 Para compilar, ejecutar en consola:
 
