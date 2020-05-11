@@ -19,7 +19,7 @@ Wikipedia of course: https://en.wikipedia.org/wiki/Minimax
 Para compilar, ejecutar en consola:
 
 ```
-gcc main.c funciones.c -o "NOMBRE_A_ELECCION"
+gcc main.c funciones.c -o *NOMBRE_A_ELECCION*
 ```
 
 Cualquier otra duda, consultar el readme.
