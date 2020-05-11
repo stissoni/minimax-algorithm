@@ -14,8 +14,6 @@ https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introductio
 
 https://www.youtube.com/watch?v=l-hh51ncgDI
 
-Wikipedia of course: https://en.wikipedia.org/wiki/Minimax
-
 Para compilar, ejecutar en consola:
 
 ```C
