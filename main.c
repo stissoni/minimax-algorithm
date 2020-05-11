@@ -1,6 +1,17 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include "funciones_y_constantes.h"
+
+const int JUGADOR = -1;
+const int COMPUTADORA = 1;
+const int CASILLERO_VACIO = 0;
+const int EMPATE = 0;
+const int TAMANIO_TABLERO = 9;
+const char CRUZ = 'X';
+const char CERO = 'O';
+const char CARACTER_VACIO = ' ';
+const int INFINITO = 999;
+
+void imprimir_tablero(int tablero[TAMANIO_TABLERO]);
+void jugar_partida(int tablero[TAMANIO_TABLERO]);
 
 int main() {
     int tablero[9] = {0,0,0,0,0,0,0,0,0};
@@ -9,23 +20,6 @@ int main() {
     imprimir_tablero(tablero);
     printf("\nLA COMPUTADORA EMPIEZA.\n\n");
     
-    int turno;
-    for(turno = 0; turno < 9 && verificar_ganador(tablero) == EMPATE; turno++) {
-        if (turno% 2 == 0){
-            movimiento_computadora(tablero);
-        }
-        else {
-            imprimir_tablero(tablero);
-            movimiento_jugador(tablero);
-            printf("\n");
-        }
-    }
-    if (verificar_ganador(tablero) == COMPUTADORA){
-        imprimir_tablero(tablero);
-        printf("\nHas perdido!\n\n");
-    }
-    if (verificar_ganador(tablero) == CASILLERO_VACIO){
-        imprimir_tablero(tablero);
-        printf("\nHan empatado\n\n");
-    }
+    jugar_partida(tablero);
+    return 0;
 }
