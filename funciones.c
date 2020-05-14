@@ -100,10 +100,10 @@ void jugar_partida(int tablero[TAMANIO_TABLERO]){
     int turno_global;
     int turno_jugador;
     int jugador_inicial;
-    printf("\nQuieres ir pimero o segundo? : ");
+    printf("\nQuieres ir pimero o segundo?: ");
     scanf("%i", &turno_jugador);
     while (turno_jugador != 1 && turno_jugador != 2){
-        printf("\nQuieres ir pimero o segundo? : ");
+        printf("\nQuieres ir pimero o segundo?: ");
         scanf("%i", &turno_jugador);
     }
 
