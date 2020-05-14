@@ -18,7 +18,12 @@ int main() {
 
     printf("\nLa computadora es X, tu eres O.\n\n");
     imprimir_tablero(tablero, 1);
-
+    do{ 
     jugar_partida(tablero);
+    char continuar_partida = 'n';
+    printf("Jugar nuevamente? (S/n): ");
+    scanf("&c", &jugar_partida);
+    } while (continuar_partida == 'S');
+
     return 0;
 }
